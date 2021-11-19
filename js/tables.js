@@ -1,6 +1,8 @@
 export default class UiBibzTable {
 
-  constructor() {
+  constructor(node) {
+    this.node = node || document
+
     this.submitPerPageSelect()
     this.clearSearch()
     this.animeSearchInput()
@@ -9,21 +11,21 @@ export default class UiBibzTable {
   }
 
   submitPerPageSelect() {
-    $('.table-pagination-per-page select').change(function() {
+    $('.table-pagination-per-page select', this.node).change(function() {
       $(this).parents('form').find('input[name=link_type]').val('per_page')
       $(this).parents('form').submit()
     })
   }
 
   clearSearch() {
-    $('.clear-search-btn').click(function() {
+    $('.clear-search-btn', this.node).click(function() {
       $(this).parents('form').find('input[type=search]').val('')
       $(this).parents('form').submit()
     })
   }
 
   animeSearchInput() {
-    $('.table-card input[type=search]').blur(function() {
+    $('.table-card input[type=search]', this.node).blur(function() {
       let parent = $(this).parent()
 
       if ($(this).val() === '') { parent.removeClass('has-value') }
@@ -32,13 +34,13 @@ export default class UiBibzTable {
   }
 
   focusSearchInput() {
-    $('.table-card input[type=search]').focus(function() {
+    $('.table-card input[type=search]', this.node).focus(function() {
       $(this).parent().addClass('is-focused has-value')
     })
   }
 
   initializeSearchInput() {
-    $('.table-card input[type=search]').each(function() {
+    $('.table-card input[type=search]', this.node).each(function() {
       if ($(this).val() !== '') {
         $(this).parent().addClass('has-value')
       }

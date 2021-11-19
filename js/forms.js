@@ -10,33 +10,34 @@ import "bootstrap-datepicker"
 
 export default class UiBibzForm {
 
-  constructor() {
-    if(document.querySelector('input.switch-field')){ this.setBootstrapSwitch() }
-    if(document.querySelector('.ui-bibz-connect')) { this.inputConnected() }
-    if(document.querySelector('.dropdown-select-field')) { this.setSelectPicker() }
-    if(document.querySelector('.multi-select-field')){ this.setMultiSelect() }
-    if(document.querySelector('.multi-column-field')){ this.setMultiColumn() }
-    if(document.querySelector('.formula-field')){ this.formula() }
-    if(document.querySelector('.auto-complete-field')){ this.autoCompleteFix() }
-    if(document.querySelector('.slider')){ this.doubleSlider() }
+  constructor(node) {
+    this.node = node || document
+    if(node.querySelector('input.switch-field')){ this.setBootstrapSwitch() }
+    if(node.querySelector('.ui-bibz-connect')) { this.inputConnected() }
+    //if(node.querySelector('.dropdown-select-field')) { this.setMultiSelect() }
+    if(node.querySelector('.multi-select-field')){ this.setMultiSelect() }
+    if(node.querySelector('.multi-column-field')){ this.setMultiColumn() }
+    if(node.querySelector('.formula-field')){ this.formula() }
+    if(node.querySelector('.auto-complete-field')){ this.autoCompleteFix() }
+    if(node.querySelector('.slider')){ this.doubleSlider() }
   }
 
   inputConnected() {
-    $('.ui-bibz-connect').inputConnected()
+    $('.ui-bibz-connect', this.node).inputConnected()
   }
 
-  setSelectPicker() {
-    $('select.dropdown-select-field').selectpicker()
-  }
+  // setSelectPicker() {
+  //   $('select.dropdown-select-field', this.node).selectpicker()
+  // }
 
   setBootstrapSwitch() {
-    $('input.switch-field').bootstrapSwitch({
+    $('input.switch-field', this.node).bootstrapSwitch({
       size: 'large'
     })
   }
 
   setMultiSelect() {
-    $('.multi-select-field').each(function() {
+    $('select.multi-select-field', this.node).each(function() {
       var classes, data
       data = $(this).data()
       classes = $(this)[0].classList.value
@@ -53,7 +54,7 @@ export default class UiBibzForm {
 
   formula() {
     let me = this
-    let formula_input_fields = $('.formula-field')
+    let formula_input_fields = $('.formula-field', this.node)
 
     formula_input_fields.each(function() {
       me.updateFormulaField($(this))
@@ -97,11 +98,11 @@ export default class UiBibzForm {
 
   setMultiColumn() {
     $.fn.multiSelect.defaults = extendMultiselect
-    $(".multi-column-field").multiSelect()
+    $(".multi-column-field", this.node).multiSelect()
   }
 
   autoCompleteFix() {
-    $(".auto-complete-field").each(function() {
+    $(".auto-complete-field", this.node).each(function() {
       var lastChild, parent, radius
       parent = $(this).parent('.input-group')
       if (parent.length > 0) {
@@ -116,11 +117,12 @@ export default class UiBibzForm {
   }
 
   doubleSlider(){
-    document.querySelectorAll(".slider").forEach(function(e){
+    let me = this
+    this.node.querySelectorAll(".slider").forEach(function(e){
       let slider = e
       let sliderId = slider.getAttribute("id")
-      let sliderMin = document.querySelector(`.slider-header[data-target=${sliderId}] .slider-header-min span`)
-      let sliderMax = document.querySelector(`.slider-header[data-target=${sliderId}] .slider-header-max span`)
+      let sliderMin = me.node.querySelector(`.slider-header[data-target=${sliderId}] .slider-header-min span`)
+      let sliderMax = me.node.querySelector(`.slider-header[data-target=${sliderId}] .slider-header-max span`)
       let rangeInput1 = slider.querySelectorAll("input[type=range]")[0]
       let rangeInput2 = slider.querySelectorAll("input[type=range]")[1]
       let inverseLeft = slider.querySelector(".slider-inverse-left")

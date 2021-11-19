@@ -7,16 +7,27 @@ export default class UiBibzJs {
   constructor(){}
 
   start(){
-    document.addEventListener("turbolinks:load", this.init)
+    document.addEventListener("turbolinks:load", (e) => this.init())
+    document.addEventListener("turbo:load", (e) => this.init())
   }
 
-  init(){
-    new UiBibzTables()
-    new UiBibzForms()
-    new UiBibzInterfaces()
+  init(node){
+    if(node === undefined) node = document
+
+    new UiBibzTables(node)
+    new UiBibzForms(node)
+    new UiBibzInterfaces(node)
   }
 }
+
+let uiBibzJs
+
 export function start(){
-  let uiBibzJs = new UiBibzJs
+  uiBibzJs = new UiBibzJs
   uiBibzJs.start()
+}
+
+export function init(node) {
+  uiBibzJs.init(node)
+  return uiBibzJs
 }

@@ -106,11 +106,9 @@
             componentTarget = $("" + target.selector);
             mode = target.mode || connectMode;
             if (mode === "remote") {
-              let params = []
-              params[`#${name}`] = values
               $.ajax({
                 url: target.url,
-                data: params
+                data: { [name]: values }
               }).done(function(data) {
                 return updateTargetComponent(data, componentTarget, component);
               });

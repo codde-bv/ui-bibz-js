@@ -1,17 +1,22 @@
-import bootstrap from "bootstrap/dist/js/bootstrap.bundle.min"
+// Import non minified version, later minifier will make sure minified version
+// is provided, while still allowing debugging to use the non minified version.
+import bootstrap from "bootstrap/dist/js/bootstrap.bundle"
+
 export default class UiBibzInterface {
 
-  constructor() {
+  constructor(node) {
+    this.node = node || document
+
     // //this.nav()
     this.tooltip()
     // this.dropdown()
     this.popover()
     this.notify()
-    // this.toast()
+    this.toast()
   }
 
   nav(){
-    document.querySelectorAll('.nav-tabs .nav-item .nav-link').forEach(function(el){
+    this.node.querySelectorAll('.nav-tabs .nav-item .nav-link').forEach(function(el){
       let tabTrigger = new bootstrap.Tab(el)
       el.addEventListener('click', function (e) {
         e.preventDefault()
@@ -21,23 +26,23 @@ export default class UiBibzInterface {
   }
 
   popover() {
-    document.querySelectorAll('[data-bs-toggle="popover"]').forEach(x => new bootstrap.Popover(x))
+    this.node.querySelectorAll('[data-bs-toggle="popover"]').forEach(x => new bootstrap.Popover(x))
   }
 
   tooltip() {
-    document.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(x => new bootstrap.Tooltip(x))
+    this.node.querySelectorAll('[data-bs-toggle="tooltip"]').forEach(x => new bootstrap.Tooltip(x))
   }
 
   dropdown() {
-    document.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(x => new bootstrap.Dropdown(x))
+    this.node.querySelectorAll('[data-bs-toggle="dropdown"]').forEach(x => new bootstrap.Dropdown(x))
   }
 
   toast() {
-    document.querySelectorAll('.toast').forEach(x => new bootstrap.Toast(x))
+    this.node.querySelectorAll('.toast').forEach(x => new bootstrap.Toast(x))
   }
 
   notify() {
-    document.querySelectorAll('.alert[data-timeout]').forEach(function(alertElement) {
+    this.node.querySelectorAll('.alert[data-timeout]').forEach(function(alertElement) {
       setTimeout(function() {
         alertElement.classList.add('fade')
       }, alertElement.getAttribute("data-timeout") )

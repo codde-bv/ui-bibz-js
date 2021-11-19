@@ -213,6 +213,12 @@ var multi$;
 		.addClass('ms-elem-selectable')
 		.attr('id', elementId+'-selectable');
 
+		if($option.attr("disabled") == "disabled"){
+			selectableLi
+			.prop('disabled', true)
+			.addClass('disabled')
+		}
+
 	    selectedLi
 		.data('ms-value', value)
 		.addClass('ms-elem-selection')
