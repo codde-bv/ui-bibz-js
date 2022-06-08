@@ -39,6 +39,10 @@ export default class UiBibzForm {
   setMultiSelect() {
     $('select.multi-select-field', this.node).each(function() {
       var classes, data
+      // If the multiselect is already initialized, do not reinitialize
+      if (this.parentElement.classList.contains('multiselect-native-select')) {
+        return
+      }
       data = $(this).data()
       classes = $(this)[0].classList.value
       delete data["multiselect"]
