@@ -80,7 +80,7 @@ $panel-columns-margin:               $panel-spacer-y !default;
 }
 
 .panel-subtitle {
-  margin-top: -($panel-spacer-y / 2);
+  margin-top: calc(-#{$panel-spacer-y} / 2);
   margin-bottom: 0;
 }
 
